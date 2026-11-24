@@ -4,6 +4,7 @@
 - Project: Smart Campus Room Availability Checker (Bolt.new project `sb1-zwdhwzpa`)
 - Stack: React 18 + TypeScript 5.5 + Vite 7 + Tailwind 3, tests with Vitest 3.2.4
 - Snapshot date: 24 Nov 2026 (state after Practice #11)
+- Baseline commit: `d888feb` in https://github.com/Azamatkyzy24/smart-campus-practice-12
 - Rule engine: `src/lib/checkAvailability.ts` (pure function `checkAvailability` + `parseInput`)
 
 ## Booking data (fictional)
