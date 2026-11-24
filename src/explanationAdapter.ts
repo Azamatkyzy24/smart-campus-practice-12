@@ -19,7 +19,7 @@ const KNOWN_REASON_CODES: ReasonCode[] = [
   'INVALID_INPUT',
   'INVALID_TIME',
   'PAST_TIME',
-  'DURATION_TOO_LONG',
+  'INVALID_DURATION',
   'OVERLAP',
   'AVAILABLE',
 ];
@@ -83,13 +83,13 @@ function buildExplanation(input: ExplanationInput): string {
     case 'ROOM_BLOCKED':
       return `${room} is currently blocked, so no time slot can be requested right now.`;
     case 'INVALID_INPUT':
-      return 'The start, end or current time was left blank or is not a whole number, so the request cannot be checked.';
+      return 'The start time, duration or current time was left blank or is not a whole number, so the request cannot be checked.';
     case 'INVALID_TIME':
-      return 'The requested time is outside the allowed 0–1440 minute range or the start is not before the end.';
+      return 'The requested slot does not fit inside the day (0–1440 minutes), so it cannot be checked.';
     case 'PAST_TIME':
       return `The requested start (${input.start} min) is not after the current time, so ${room} cannot be booked for ${slot}.`;
-    case 'DURATION_TOO_LONG':
-      return `The requested slot ${slot} is longer than the 120-minute maximum for ${room}.`;
+    case 'INVALID_DURATION':
+      return `The requested duration must be between 1 and 120 minutes for ${room}.`;
     case 'OVERLAP':
       return `The requested slot ${slot} overlaps a time already reserved in ${room}.`;
     case 'AVAILABLE':

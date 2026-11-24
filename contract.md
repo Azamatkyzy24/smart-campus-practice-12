@@ -47,6 +47,7 @@ even when the room is blocked.
 | # | Condition | status | reasonCode | Visible message |
 |---|---|---|---|---|
 | 1 | `start` or `duration` empty / not a whole number | invalid | `INVALID_INPUT` | "Start time and duration must be whole numbers." |
+| 1b | `now` empty, not a whole number, or outside 0–1440 | invalid | `INVALID_INPUT` | "Current time (now) must be a whole number between 0 and 1440." |
 | 2 | `duration <= 0` or `duration > 120` | invalid | `INVALID_DURATION` | "Duration must be between 1 and 120 minutes." |
 | 3 | `start <= now` | invalid | `PAST_TIME` | "Start time must be in the future (now is {now})." |
 | 4 | `start < 0` or `end > 1440` | invalid | `INVALID_TIME` | "The booking must start and end within the same day (0–1440 minutes)." |

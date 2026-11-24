@@ -42,7 +42,7 @@ export default function App() {
   const [roomBlocked, setRoomBlocked] = useState(false);
   const [now, setNow] = useState('540');
   const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
+  const [duration, setDuration] = useState('');
   const [bookings] = useState<Booking[]>([{ start: 600, end: 660 }]);
   const [result, setResult] = useState<CheckResult | null>(null);
   const [mockMode, setMockMode] = useState<MockMode>('normal');
@@ -53,7 +53,7 @@ export default function App() {
 
   useEffect(() => {
     setResult(null);
-  }, [start, end, now, roomBlocked]);
+  }, [start, duration, now, roomBlocked]);
 
   useEffect(() => {
     setExplanation(null);
@@ -69,7 +69,7 @@ export default function App() {
     setResult(
       checkAvailability({
         roomBlocked,
-        ...parseInput({ start, end, now }),
+        ...parseInput({ start, duration, now }),
         bookings,
       })
     );
@@ -77,7 +77,7 @@ export default function App() {
 
   const handleReset = () => {
     setStart('');
-    setEnd('');
+    setDuration('');
     setResult(null);
   };
 
@@ -93,8 +93,8 @@ export default function App() {
           {
             roomLabel: 'Room A-101',
             start: Number(start),
-            end: Number(end),
-            isAvailable: result.status === 'available',
+            end: Number(start) + Number(duration),
+            isAvailable: result.available,
             reasonCode: result.reasonCode,
           },
           mockMode
@@ -215,16 +215,16 @@ export default function App() {
               />
             </div>
             <div>
-              <label htmlFor="end" className="mb-1.5 block text-sm font-medium text-slate-700">
-                End (minutes)
+              <label htmlFor="duration" className="mb-1.5 block text-sm font-medium text-slate-700">
+                Duration (minutes, 1–120)
               </label>
               <input
-                id="end"
+                id="duration"
                 type="number"
                 inputMode="numeric"
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
-                placeholder="e.g. 760"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                placeholder="e.g. 60"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
@@ -256,7 +256,7 @@ export default function App() {
                     ? 'Available'
                     : result.status === 'unavailable'
                     ? 'Unavailable'
-                    : 'Check failed'}
+                    : 'Validation error'}
                 </p>
                 <p className="mt-1 text-sm leading-relaxed">{result.message}</p>
               </div>
